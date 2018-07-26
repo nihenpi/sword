@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <define name="config_properties_exists" class="ch.qos.logback.core.property.ResourceExistsPropertyDefiner">
+        <resource>config/application.properties</resource>
+    </define>
+
+    <if condition='p("config_properties_exists").equals("true")'>
+        <then>
+            <property resource="config/application.properties"/>
+        </then>
+    </if>
+
+    <property name="app_name" value="${app.name:-dev}"/>
+    <springProfile name="dev,test">
+        <property name="app_debug" value="true"/>
+    </springProfile>
+
+    <property name="logback_name" value="${app.log.name:-${app_name}}"/>
+    <property name="logback_seperate" value="${app.log.seperate:-false}"/>
+    <property name="logback_level" value="${app.log.level:-INFO}"/>
+    <property name="logback_rolling" value="false"/>
+    <property name="logback_pattern" value="%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+    <property name="logback_pattern_debug" value="%date ${logback_name} [%t] %level %logger{36} - %msg%n"/>
+
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logback_pattern_debug}</pattern>
+        </encoder>
+    </appender>
+
+    <if condition='p("app_debug").equals("true")'>
+        <then>
+            <property name="logback_level" value="${app.log.level:-INFO}"/>
+            <property name="logback_location" value="${app.log.location:-./log}"/>
+            <property name="logback_seperate" value="${app.log.seperate:-false}"/>
+            <property name="logback_rolling" value="false"/>
+
+            <!-- 特殊设置 -->
+            <!-- dev.* -->
+            <logger name="dev" level="DEBUG"/>
+            <logger name="com.smart" level="DEBUG"/>
+            <logger name="com.timingbar" level="DEBUG"/>
+            <logger name="jdbc.resultsettable" level="INFO"/>
+        </then>
+        <else>
+            <property name="logback_level" value="${app.log.level:-WARN}"/>
+            <property name="logback_location" value="${app.log.location:-/tmp/data/log/${logback_name}-%d{yyyyMMdd}}"/>
+            <property name="logback_seperate" value="${app.log.seperate:-false}"/>
+
+            <!-- 特殊设置 -->
+            <!-- dev.* -->
+            <logger name="dev" level="INFO"/>
+            <logger name="com.smart" level="INFO"/>
+            <logger name="com.timingbar" level="INFO"/>
+            <logger name="jdbc.resultsettable" level="OFF"/>
+        </else>
+    </if>
+
+    <logger name="org.apache.commons.configuration" level="ERROR"/>
+    <logger name="org.jboss.logging" level="OFF"/>
+    <logger name="org.directwebremoting" level="${logback_level}"/>
+    <logger name="com.mchange.v2.c3p0" level="${logback_level}"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="${logback_level}"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.connection" level="OFF"/>
+    <logger name="freemarker" level="${logback_level}"/>
+    <logger name="jetbrick.template" level="${logback_level}"/>
+    <logger name="com.atomikos.icatch.imp.CoordinatorImp" level="ERROR"/>
+    <logger name="org.springframework.amqp.rabbit" level="INFO"/>
+
+    <logger name="javax.activation" level="${logback_level}"/>
+    <logger name="javax.mail" level="${logback_level}"/>
+    <logger name="javax.xml.bind" level="${logback_level}"/>
+    <logger name="ch.qos.logback" level="${logback_level}"/>
+    <logger name="com.ryantenney" level="${logback_level}"/>
+    <logger name="com.sun.xml.internal.bind" level="${logback_level}"/>
+    <logger name="com.zaxxer" level="${logback_level}"/>
+    <logger name="io.undertow" level="${logback_level}"/>
+    <logger name="net.sf.ehcache" level="${logback_level}"/>
+    <logger name="org.apache" level="${logback_level}"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name="org.bson" level="${logback_level}"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.hibernate.validator" level="${logback_level}"/>
+    <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+    <logger name="org.springframework" level="${logback_level}"/>
+    <logger name="org.springframework.web" level="${logback_level}"/>
+    <logger name="org.springframework.security" level="${logback_level}"/>
+    <logger name="org.springframework.cache" level="${logback_level}"/>
+
+
+    <root level="${logback_level}">
+        <appender-ref ref="console"/>
+    </root>
+
+
+</configuration>
