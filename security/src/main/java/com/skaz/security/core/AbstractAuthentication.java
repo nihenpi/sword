@@ -19,7 +19,7 @@ import java.util.Iterator;
 @Data
 public abstract class AbstractAuthentication implements Authentication, CredentialsContainer {
 
-    protected Collection<? extends GrantedAuthority> authorities = AuthorityUtils.NO_AUTHORITIES;
+    protected Collection<? extends GrantedAuthority> authorities;
 
 
     protected Object details;
