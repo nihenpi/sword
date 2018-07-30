@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @author jungle
  */
 public abstract class Securitys {
-    public static final String TOKEN = "master";
+    public static final String TOKEN = "fix";
     public static final String SECRET_KEY = Constants.SECURITY_SECRET;
     public static final String SESSION_NAME = Constants.SESSION_NAME;
     public static final int SESSION_EXPIRE_BROWSER = Constants.SECURITY_SESSION_EXPIRE_BROWSER;
