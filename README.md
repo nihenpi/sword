@@ -28,5 +28,6 @@
  - core：包含权限过滤器以及安全管理器
  - jwt：使用jwt负责token的生成以及验证
 
-## 运行流程
+## 系统结构
 
+  ![avatar](https://s1.ax1x.com/2018/08/06/PrcGvT.png)
