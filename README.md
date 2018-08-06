@@ -30,4 +30,4 @@
 
 ## 系统结构
 
-  ![avatar](https://s1.ax1x.com/2018/08/06/PrcGvT.png)
+  ![avatar](https://s1.ax1x.com/2018/08/06/Prcda9.png)
