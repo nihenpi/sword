@@ -31,7 +31,7 @@ public class SecurityManager {
         if (subject == null || subject.length() == 0) {
             throw new AccountExpiredException(Constants.ERROR_STATUS_401_EXPIRED_MSG);
         }
-        SecurityAuthentication authentication = this.getSession(subject, request);
+        SecurityAuthentication authentication = this.getSession(subject);
         if (authentication == null || !accessToken.equalsIgnoreCase(authentication.getAccessToken())) {
             throw new AccountExpiredException(Constants.ERROR_STATUS_401_EXPIRED_MSG);
         }
@@ -60,7 +60,7 @@ public class SecurityManager {
         return false;
     }
 
-    private SecurityAuthentication getSession(String subject, HttpServletRequest request) {
+    private SecurityAuthentication getSession(String subject) {
         return this.cacheTemplate.get(Securitys.SESSION_NAME, subject);
     }
 
